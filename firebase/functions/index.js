@@ -7,20 +7,18 @@ exports.onQuestionCreate = functions.firestore.document('questions/{questionId}'
   (snap, context) => {
     // Get an object representing the document
     // e.g. {'name': 'Marie', 'age': 66}
-    const newValue = snap.data();
+    const data = snap.data();
 
     // access a particular field as you would any JS property
-    //const name = newValue.question;
-
-    // perform desired operations ...
-    // import the module
+    //const name = data.question;
 
     const postData = {
       "id": context.params.questionId,
-      "question": newValue.question,
-      "category": newValue.category,
-      "toSend": newValue.TO_SEND.toMillis(),
-      "toEnd": newValue.TO_END.toMillis(),
+      "title": data.question,
+      "category": data.category,
+      "toSend": data.TO_SEND.toMillis(),
+      "toEnd": data.TO_END.toMillis(),
+      "choices": data.choices,
     };
 
     //return console.log(postData);
