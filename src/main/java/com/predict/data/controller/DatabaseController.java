@@ -1,10 +1,13 @@
 package com.predict.data.controller;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
-import org.springframework.stereotype.Controller;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.cloud.FirestoreClient;
+import java.io.IOException;
+import org.springframework.core.io.ClassPathResource;
 
-@Controller
 public class DatabaseController {
 
   private Firestore db;
@@ -13,12 +16,25 @@ public class DatabaseController {
   /**
    * Initialize Firestore using the project ID.
    */
-  public DatabaseController() {
-    FirestoreOptions firestoreOptions =
-        FirestoreOptions.getDefaultInstance().toBuilder()
-            .setProjectId(PROJECT_ID)
-            .build();
-    this.db = firestoreOptions.getService();
+  public DatabaseController() throws Exception {
+    try {
+      //ClassLoader classLoader = getClass().getClassLoader();
+      //File file = new File(classLoader.getResource("fb_creds.json").getFile());
+      //InputStream serviceAccount = new FileInputStream(file);
+      //GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
+
+      FirebaseOptions options = new FirebaseOptions.Builder()
+          .setCredentials(GoogleCredentials.fromStream(new ClassPathResource("/fb_creds.json").getInputStream()))
+          .build();
+
+      if (FirebaseApp.getApps().isEmpty()) {
+        FirebaseApp.initializeApp(options);
+      }
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+
+    this.db = FirestoreClient.getFirestore();
   }
 
   public Firestore getDb() {

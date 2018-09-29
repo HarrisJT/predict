@@ -5,7 +5,6 @@ import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
-import com.predict.data.entity.Question;
 import com.predict.data.entity.builder.CreateQuestionResponseBuilder;
 import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.entity.response.CreateQuestionResponse;
@@ -19,7 +18,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("SurveyService")
+@Service("surveyService")
 public class SurveyService extends SurveyMonkeyService {
 
   private static final String API_AUTH_TOKEN;
