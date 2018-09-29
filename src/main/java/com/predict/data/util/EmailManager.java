@@ -1,8 +1,12 @@
 package com.predict.data.util;
 
+import com.predict.data.entity.User;
+import com.predict.data.service.UserService;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Properties;
 
 public final class EmailManager {
@@ -63,6 +67,29 @@ public final class EmailManager {
             message.setText(content);
             Transport.send(message);
         } catch (MessagingException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Sends an email to all current users
+     *
+     * @param subject is the subject of the email
+     * @param content is the content of the email
+     * @returns whether or not it succeeded
+     */
+    public static boolean sendEmailToAllUsers(String subject, String content) {
+        try {
+            UserService service = new UserService();
+            List<User> users = service.retrieveAllUsers();
+            String[] emailAddresses = new String[users.size()];
+            for(int i = 0; i < users.size(); i++) {
+                emailAddresses[i] = users.get(i).getEmail();
+            }
+            sendEmail(emailAddresses, subject, content);
+        }
+        catch(Exception e) {
             return false;
         }
         return true;

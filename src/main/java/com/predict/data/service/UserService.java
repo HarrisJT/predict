@@ -49,7 +49,7 @@ public class UserService {
     }
   }
 
-  List<User> retrieveAllUsers() throws Exception {
+  public List<User> retrieveAllUsers() throws Exception {
     // asynchronously retrieve all users
     ApiFuture<QuerySnapshot> query = db.collection("users").get();
     QuerySnapshot querySnapshot = query.get();
