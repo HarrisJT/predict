@@ -13,9 +13,12 @@ public class CreateQuestionRequest extends Request {
     private String family;
     private String subtype;
     private Answers answers;
+    private ArrayList<Heading> headings;
 
 
     public CreateQuestionRequest(Question question) {
+        this.headings = new ArrayList<Heading>();
+        headings.setHead
         setDate(new Date());
         this.heading = question.getTitle();
         this.family = "single_choice";
@@ -63,6 +66,13 @@ public class CreateQuestionRequest extends Request {
 
     public void setAnswers(Answers answers) {
         this.answers = answers;
+    }
+
+    class Heading {
+
+        public Heading() {
+            
+        }
     }
 
     class Answers {
