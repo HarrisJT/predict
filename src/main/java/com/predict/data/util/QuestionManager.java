@@ -1,6 +1,7 @@
 package com.predict.data.util;
 
 import com.predict.data.entity.Question;
+import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.service.QuestionService;
 import com.predict.data.service.SurveyService;
 import java.util.ArrayList;
@@ -24,6 +25,12 @@ public class QuestionManager {
   public QuestionManager(QuestionService questionService, SurveyService surveyService) {
     this.questionService = questionService;
     this.surveyService = surveyService;
+  }
+
+  public newQuestion(Question question) {
+    CreateQuestionRequest createQuestionRequest = new CreateQuestionRequest(question);
+
+
   }
 
   @Scheduled(cron = "0 0 */1 * * ?")

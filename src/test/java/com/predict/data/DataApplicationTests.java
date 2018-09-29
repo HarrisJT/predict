@@ -18,22 +18,17 @@ public class DataApplicationTests {
     @Test
     public void testSurvey() {
         SurveyService surveyService = new SurveyService();
-        if (surveyService == null) {
-            System.out.println("Failure");
-        } else {
-            System.out.println("Success");
-        }
     }
 
-    @Test
-    public void surveyAddQuestion() {
-        SurveyService surveyService = new SurveyService();
-
-        String question = "Does this work?";
-        String category = "testing";
-        Question questionObject = new Question(question, category);
-
-        surveyService.createSurvey(questionObject);
-    }
+//    @Test
+//    public void surveyAddQuestion() {
+//        SurveyService surveyService = new SurveyService();
+//
+//        String question = "Does this work?";
+//        String category = "testing";
+//        Question questionObject = new Question(question, category);
+//
+//        surveyService.createSurvey(questionObject);
+//    }
 
 }
