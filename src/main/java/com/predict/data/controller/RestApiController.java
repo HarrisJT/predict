@@ -21,9 +21,16 @@ public class RestApiController {
 
   //@CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(value = "/question", method = RequestMethod.POST)
-  public ResponseEntity<Question> register(@RequestParam(value = "question") String questionText,
-      @RequestParam(value = "category") String category) {
-      Question question = new Question(questionText, category);
+  public ResponseEntity<Question> register(
+      @RequestParam(value = "question") String questionText,
+      @RequestParam(value = "category") String category,
+      @RequestParam(value = "toSend") int toSend,
+      @RequestParam(value = "toEnd") int toEnd
+
+  ) {
+    Question question = new Question(questionText, category);
+    question.setToSend(toSend);
+    question.setToEnd(toEnd);
     return new ResponseEntity<>(SurveyService.newQuestion(question), HttpStatus.OK);
   }
 
