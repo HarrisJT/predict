@@ -54,6 +54,8 @@
         <artifactId>api-common</artifactId>
         <version>1.7.0</version>
       </dependency>
+
+        <!-- JSurveyMonkey -->
       <dependency>
         <groupId>com.github.felipenascimento0204</groupId>
         <artifactId>jsurveymonkey</artifactId>
