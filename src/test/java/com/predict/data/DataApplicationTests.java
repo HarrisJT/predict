@@ -18,10 +18,10 @@ public class DataApplicationTests {
     @Test
     public void testSurvey() {
         SurveyService surveyService = new SurveyService();
-        if (surveyService == null) {
-            assert
-        }
+        assert surveyService == null : "Survey Creation Failure";
+        System.out.println("Survey Creation Success");
     }
+}
 
 //    @Test
 //    public void surveyAddQuestion() {
@@ -34,4 +34,3 @@ public class DataApplicationTests {
 //        surveyService.createSurvey(questionObject);
 //    }
 
-}
