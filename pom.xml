@@ -18,6 +18,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -53,6 +54,11 @@
         <artifactId>api-common</artifactId>
         <version>1.7.0</version>
       </dependency>
+      <dependency>
+        <groupId>com.github.felipenascimento0204</groupId>
+        <artifactId>jsurveymonkey</artifactId>
+        <version>89635925fb06f7cc75f079a06c38f36164f8248b</version>
+      </dependency>
 
 
       <dependency>
@@ -71,6 +77,13 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
 
     <build>
         <plugins>
