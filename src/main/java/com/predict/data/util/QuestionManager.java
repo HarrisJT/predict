@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("questionManager")
 public class QuestionManager {
 
-  private static final Logger logger = LoggerFactory.getLogger(SurveyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(QuestionManager.class);
 
   private QuestionService questionService;
 

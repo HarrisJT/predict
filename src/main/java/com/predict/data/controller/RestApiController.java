@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RestApiController {
 
-  private static final Logger logger = LoggerFactory.getLogger(SurveyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
 
   private SurveyService surveyService;
   private static final String API_AUTH_TOKEN;

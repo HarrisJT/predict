@@ -11,16 +11,28 @@ import com.predict.data.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("UserService")
+@Service("userService")
 public class UserService {
+
+  private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
   private Firestore db;
 
+  private DatabaseController databaseController;
+
+  @Autowired
   public UserService() {
-    DatabaseController controller = new DatabaseController();
-    this.db = controller.getDb();
+    try {
+      databaseController = new DatabaseController();
+      this.db = databaseController.getDb();
+    } catch (Exception ex) {
+      logger.error("Failed to initialize database: ", ex);
+    }
   }
 
   void writeToUser(String username, Map<String, Object> data) throws Exception {

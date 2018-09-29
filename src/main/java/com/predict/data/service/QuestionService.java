@@ -9,22 +9,35 @@ import com.predict.data.entity.Question;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("QuestionService")
+@Service("questionService")
 public class QuestionService {
+
+  private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
   private Firestore db;
 
+  private DatabaseController databaseController;
+
+  @Autowired
   public QuestionService() {
-    DatabaseController controller = new DatabaseController();
-    this.db = controller.getDb();
+    try {
+      databaseController = new DatabaseController();
+      this.db = databaseController.getDb();
+    } catch (Exception ex) {
+      logger.error("Failed to initialize database: ", ex);
+    }
   }
 
   // TODO: THIS IS BOILERPLATE
   public List<Question> queryForEndedQuestions() throws Exception {
     Date currentTime = new Date();
-    ApiFuture<QuerySnapshot> query = db.collection("questions").whereGreaterThan("TO_END", currentTime).get();
+    ApiFuture<QuerySnapshot> query = db.collection("questions")
+        .whereGreaterThan("TO_END", currentTime).get();
     QuerySnapshot querySnapshot = query.get();
     List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
     List<Question> allQuestions = new ArrayList<>();
