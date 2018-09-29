@@ -1,8 +1,6 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
-/src/main/resources/application.properties
-
 ### STS ###
 .apt_generated
 .classpath
@@ -206,3 +204,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+#--------------------------------------------- USER DEFINED:
+application.properties
+node_modules
