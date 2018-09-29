@@ -36,35 +36,34 @@ public class SurveyService extends SurveyMonkeyService {
     this.surveyService = surveyService;
   }
 
-  public CreateQuestionResponse createQuestion(CreateQuestionRequest request) {
-    try {
-      CloseableHttpClient httpClient = HttpClients.createDefault();
-      HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE + ""));
-
-      setRequestAuthentication(httpPost, request.getAuthenticationToken());
-      setRequestBody(httpPost, request.getJsonBody());
-
-      CloseableHttpResponse response = httpClient.execute(httpPost);
-      String result = EntityUtils.toString(response.getEntity());
-
-      setResponse(result);
-      return new CreateQuestionResponseBuilder(result).getResponse();
-
-    } catch (Exception e) {
-      return new CreateQuestionResponse(StatusSurveyResponse.ERROR, e.getMessage());
-    }
-  }
-
-
-  public void createSurvey(Question question) {
+  public CreateSurveyResponse createSurvey() {
     CreateSurveyRequest createSurveyRequest = new CreateSurveyRequest();
-    createSurveyRequest.setTitle(question.getCategory());
+    createSurveyRequest.setTitle("Predict");
     createSurveyRequest.setNickname("New question from Predict");
 
     CreateSurveyResponse createSurveyResponse = surveyService.createSurvey(createSurveyRequest);
-
-    System.out.println(createSurveyResponse.getId());
+    //TODO: Error Checking
+    return createSurveyResponse;
   }
+
+    public CreateQuestionResponse addQuestion(CreateQuestionRequest request) {
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE +  "pages/1/questions"));
+
+            setRequestAuthentication(httpPost, request.getAuthenticationToken());
+            setRequestBody(httpPost, request.getJsonBody());
+
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            String result = EntityUtils.toString(response.getEntity());
+
+            setResponse(result);
+            return new CreateQuestionResponseBuilder(result).getResponse();
+
+        } catch (Exception e) {
+            return new CreateQuestionResponse(StatusSurveyResponse.ERROR, e.getMessage());
+        }
+    }
 
 //
 //    public void fetchSurvey() {
