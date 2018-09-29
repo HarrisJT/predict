@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.*;
 
-@Service
+@Service("SurveyService")
 public class SurveyService extends SurveyMonkeyService {
 
     private static final String API_AUTH_TOKEN;
@@ -41,7 +41,7 @@ public class SurveyService extends SurveyMonkeyService {
         try {
 
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE + ));
+            HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE));
 
             setRequestAuthentication(httpPost, request.getAuthenticationToken());
             setRequestBody(httpPost, request.getJsonBody());

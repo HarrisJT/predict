@@ -20,6 +20,7 @@ public class CreateQuestionRequest extends Request {
         this.family = "single_choice";
         this.subtype = "vertical";
         this.answers = new Answers();
+        this.answers.setChoices(question.choices);
     }
 
     class Answers {
