@@ -33,6 +33,7 @@ public class UserService {
     System.out.println("Update time : " + result.get().getUpdateTime());
   }
 
+  // TODO: THIS IS BOILERPLATE
   void queryUser() throws Exception {
     ApiFuture<QuerySnapshot> query =
         db.collection("users").whereLessThan("age", 100).get();

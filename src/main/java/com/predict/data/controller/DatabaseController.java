@@ -22,5 +22,4 @@ public class DatabaseController {
   public Firestore getDb() {
     return db;
   }
-
 }
