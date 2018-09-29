@@ -7,10 +7,10 @@ import java.util.Properties;
 
 public final class EmailManager {
 
-    private static final String EMAIL_ADDRESS = "predictapp.noreply@gmail.com";
-    private static final String EMAIL_PASSWORD = "coffee4hat2";
-    private static final String EMAIL_HOST = "smtp.gmail.com";
-    private static final String EMAIL_PORT = "587";
+    private static final String EMAIL_ADDRESS;
+    private static final String EMAIL_PASSWORD;
+    private static final String EMAIL_HOST;
+    private static final String EMAIL_PORT;
     private static final Properties EMAIL_PROPERTIES;
 
     /**
@@ -19,6 +19,13 @@ public final class EmailManager {
     private EmailManager() { }
 
     static {
+        // Initialize static variables
+        EMAIL_ADDRESS = ConfigManager.getProperty("email_address");
+        EMAIL_PASSWORD = ConfigManager.getProperty("email_password");
+        EMAIL_HOST = ConfigManager.getProperty("email_host");
+        EMAIL_PORT = ConfigManager.getProperty("email_port");
+
+        // Initialize email properties
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.host", EMAIL_HOST);
@@ -27,6 +34,14 @@ public final class EmailManager {
         EMAIL_PROPERTIES = properties;
     }
 
+    /**
+     * Sends a mass email
+     *
+     * @param recipients is an array of addresses to be blind carbon copied onto the email
+     * @param subject is the email subject
+     * @param content is the content of the email
+     * @returns whether the email was sent successfully
+     */
     public static boolean sendEmail(String[] recipients, String subject, String content) {
         Authenticator authenticator = new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
@@ -36,7 +51,6 @@ public final class EmailManager {
         Session session = Session.getInstance(EMAIL_PROPERTIES, authenticator);
         MimeMessage message = new MimeMessage(session);
         try {
-            // Format email
             Address[] addresses = new Address[recipients.length];
             for(int i = 0; i < recipients.length; i++) {
                 addresses[i] = new InternetAddress(recipients[i]);
