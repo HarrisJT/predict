@@ -1,5 +1,6 @@
 package com.predict.data;
 
+import com.predict.data.entity.Question;
 import com.predict.data.service.SurveyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,17 @@ public class DataApplicationTests {
         } else {
             System.out.println("Success");
         }
+    }
+
+    @Test
+    public void surveyAddQuestion() {
+        SurveyService surveyService = new SurveyService();
+
+        String question = "Does this work?";
+        String category = "testing";
+        Question questionObject = new Question(question, category);
+
+        surveyService.createSurvey(questionObject);
     }
 
 }
