@@ -38,6 +38,7 @@ public class RestApiController {
     }
 
     question.setSurveyId(surveyId);
+    // TODO Error checking
 
     CreateQuestionRequest questionRequest = new CreateQuestionRequest(question);
 

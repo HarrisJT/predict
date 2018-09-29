@@ -36,11 +36,22 @@ public class SurveyService extends SurveyMonkeyService {
     this.surveyService = surveyService;
   }
 
+  public String createSurvey() {
+    CreateSurveyRequest createSurveyRequest = new CreateSurveyRequest();
+    createSurveyRequest.setTitle("Predict");
+    createSurveyRequest.setNickname("New question from Predict");
+
+    CreateSurveyResponse createSurveyResponse = surveyService.createSurvey(createSurveyRequest);
+
+    return createSurveyResponse.getId();
+  }
+
   public CreateQuestionResponse addQuestion(CreateQuestionRequest request) {
     try {
 
       CloseableHttpClient httpClient = HttpClients.createDefault();
-      HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE + "pages/1/questions"));
+      HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE
+              + "/" + request.getSurveyId() + "/pages/1/questions"));
 
       setRequestAuthentication(httpPost, request.getAuthenticationToken());
       setRequestBody(httpPost, request.getJsonBody());
@@ -54,17 +65,6 @@ public class SurveyService extends SurveyMonkeyService {
     } catch (Exception e) {
       return new CreateQuestionResponse(StatusSurveyResponse.ERROR, e.getMessage());
     }
-  }
-
-
-  public String createSurvey() {
-    CreateSurveyRequest createSurveyRequest = new CreateSurveyRequest();
-    createSurveyRequest.setTitle("Predict");
-    createSurveyRequest.setNickname("New question from Predict");
-
-    CreateSurveyResponse createSurveyResponse = surveyService.createSurvey(createSurveyRequest);
-
-    return createSurveyResponse.getId();
   }
 
 //
