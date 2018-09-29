@@ -7,8 +7,12 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.predict.data.controller.DatabaseController;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.predict.data.entity.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,15 +49,14 @@ public class UserService {
     }
   }
 
-  void retrieveAllUsers() throws Exception {
+  public List<User> retrieveAllUsers() throws Exception {
     // asynchronously retrieve all users
     ApiFuture<QuerySnapshot> query = db.collection("users").get();
     QuerySnapshot querySnapshot = query.get();
-    List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-    for (QueryDocumentSnapshot document : documents) {
-      System.out.println("User: " + document.getId());
+    List<User> users = new ArrayList<User>();
+    for(QueryDocumentSnapshot document : querySnapshot.getDocuments()) {
+      users.add(new User(document.getId()));
     }
+    return users;
   }
-
-
 }
