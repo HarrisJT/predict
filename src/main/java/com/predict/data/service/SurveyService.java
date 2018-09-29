@@ -5,6 +5,7 @@ import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
+import com.predict.data.entity.Question;
 import com.predict.data.entity.builder.CreateQuestionResponseBuilder;
 import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.entity.response.CreateQuestionResponse;
@@ -39,7 +40,7 @@ public class SurveyService extends SurveyMonkeyService {
     try {
 
       CloseableHttpClient httpClient = HttpClients.createDefault();
-      HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE + ""));
+      HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE + "pages/1/questions"));
 
       setRequestAuthentication(httpPost, request.getAuthenticationToken());
       setRequestBody(httpPost, request.getJsonBody());

@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Question {
   private String id;
+  private String surveyId;
   private String title;
   private String category;
   private int toSend;
@@ -21,6 +22,14 @@ public class Question {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getSurveyId() {
+    return surveyId;
+  }
+  
+  public void setSurveyId(String surveyId) {
+    this.surveyId = surveyId;
   }
 
   public ArrayList<Map<String, String>> getChoices() {

@@ -18,6 +18,9 @@ public class DataApplicationTests {
     @Test
     public void testSurvey() {
         SurveyService surveyService = new SurveyService();
+        if (surveyService == null) {
+            assert
+        }
     }
 
 //    @Test
