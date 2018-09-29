@@ -1,5 +1,7 @@
 package com.predict.data.controller;
 
+import com.predict.data.entity.Question;
+import com.predict.data.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,11 @@ public class RestApiController {
   }
 
   //@CrossOrigin(origins = "http://localhost:8080")
-  @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public ResponseEntity<Question> register(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
-
-   // return new ResponseEntity<>(this.userRepository.save(user), HttpStatus.OK);
+  @RequestMapping(value = "/question", method = RequestMethod.POST)
+  public ResponseEntity<Question> register(@RequestParam(value = "question") String questionText,
+      @RequestParam(value = "category") String category) {
+      Question question = new Question(questionText, category);
+    return new ResponseEntity<>(SurveyService.newQuestion(question), HttpStatus.OK);
   }
 
 }

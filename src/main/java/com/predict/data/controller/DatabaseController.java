@@ -2,7 +2,9 @@ package com.predict.data.controller;
 
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class DatabaseController {
 
   private Firestore db;

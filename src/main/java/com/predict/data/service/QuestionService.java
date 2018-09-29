@@ -6,7 +6,9 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.predict.data.controller.DatabaseController;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class QuestionService {
 
   private Firestore db;
