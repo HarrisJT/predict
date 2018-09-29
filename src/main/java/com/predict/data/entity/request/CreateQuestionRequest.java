@@ -16,10 +16,11 @@ public class CreateQuestionRequest extends Request {
 
     public CreateQuestionRequest(Question question) {
         setDate(new Date());
-        this.heading = question.title;
+        this.heading = question.getTitle();
         this.family = "single_choice";
         this.subtype = "vertical";
         this.answers = new Answers();
+        this.answers.setChoices(question.getChoices());
     }
 
     class Answers {

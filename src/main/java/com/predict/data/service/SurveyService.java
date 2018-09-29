@@ -5,7 +5,6 @@ import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
-import com.predict.data.entity.Question;
 import com.predict.data.entity.builder.CreateQuestionResponseBuilder;
 import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.entity.response.CreateQuestionResponse;
@@ -36,7 +35,7 @@ public class SurveyService extends SurveyMonkeyService {
     this.surveyService = surveyService;
   }
 
-  public CreateQuestionResponse createQuestion(CreateQuestionRequest request) {
+  public CreateQuestionResponse addQuestion(CreateQuestionRequest request) {
     try {
 
       CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -57,14 +56,14 @@ public class SurveyService extends SurveyMonkeyService {
   }
 
 
-  public void createSurvey(Question question) {
+  public String createSurvey() {
     CreateSurveyRequest createSurveyRequest = new CreateSurveyRequest();
-    createSurveyRequest.setTitle(question.getCategory());
+    createSurveyRequest.setTitle("Predict");
     createSurveyRequest.setNickname("New question from Predict");
 
     CreateSurveyResponse createSurveyResponse = surveyService.createSurvey(createSurveyRequest);
 
-    System.out.println(createSurveyResponse.getId());
+    return createSurveyResponse.getId();
   }
 
 //
