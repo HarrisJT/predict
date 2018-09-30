@@ -35,20 +35,26 @@ public class UserService {
   public List<User> retrieveAllUsers() {
     Query newQuery = db.getReference("users/").orderByKey();
     List<User> users = new ArrayList<>();
-    newQuery.addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        for (DataSnapshot data : dataSnapshot.getChildren()) {
-          User user = data.getValue(User.class);
-          users.add(user);
-        }
-      }
 
-      @Override
-      public void onCancelled(DatabaseError databaseError) {
-        logger.error("Failed to retrieveAllUsers: ", databaseError);
-      }
-    });
+    users.add(new User("braemelliot@gmail.com") );
+    users.add(new User("ebraem@wisc.edu") );
+    users.add(new User("hjthompson2@wisc.edu") );
+    users.add(new User("harris@harrisjt.com") );
+    users.add(new User("rhemmila@gwisc.edu") );
+//    newQuery.addValueEventListener(new ValueEventListener() {
+//      @Override
+//      public void onDataChange(DataSnapshot dataSnapshot) {
+//        for (DataSnapshot data : dataSnapshot.getChildren()) {
+//          User user = data.getValue(User.class);
+//          users.add(user);
+//        }
+//      }
+//
+//      @Override
+//      public void onCancelled(DatabaseError databaseError) {
+//        logger.error("Failed to retrieveAllUsers: ", databaseError);
+//      }
+//    });
 
     return users;
   }

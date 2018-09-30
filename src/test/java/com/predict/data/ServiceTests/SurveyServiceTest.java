@@ -4,6 +4,7 @@ import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.Question;
 import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.service.SurveyService;
+import com.predict.data.service.UserService;
 import com.predict.data.util.ConfigManager;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -67,9 +68,13 @@ public class SurveyServiceTest {
 //
 //
 //    }
-
+//
 //    @Test
 //    public void fetchSurveyTest() {
+//        UserService userService = new UserService(databaseController);
+//        SurveyService surveyService = new SurveyService(databaseController, userService);
 //
+//
+//        surveyService.fetchSurvey();
 //    }
 }
