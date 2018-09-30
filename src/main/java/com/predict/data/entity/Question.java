@@ -6,7 +6,7 @@ import java.util.Map;
 public class Question {
 
   private String surveyId;
-  private String questionId
+  private String questionId;
   private String title;
   private String category;
   private String toSend;

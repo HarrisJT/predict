@@ -2,15 +2,11 @@ package com.predict.data.entity.request;
 
 import br.com.devfast.jsurveymonkey.commons.Request;
 import com.predict.data.entity.Question;
-import org.json.JSONStringer;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import org.json.JSONStringer;
 
 public class CreateQuestionRequest extends Request {
     private Question question;
-
 
     public CreateQuestionRequest(Question question) {
         setDate(new Date());
