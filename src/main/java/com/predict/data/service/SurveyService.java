@@ -14,7 +14,6 @@ import com.predict.data.entity.Question;
 import com.predict.data.entity.builder.CreateQuestionResponseBuilder;
 import com.predict.data.entity.request.CreatePageRequest;
 import com.predict.data.entity.request.CreateQuestionRequest;
-import com.predict.data.entity.response.CreatePageResponse;
 import com.predict.data.entity.response.CreateQuestionResponse;
 import com.predict.data.util.ConfigManager;
 import java.net.URI;
@@ -38,7 +37,6 @@ public class SurveyService extends SurveyMonkeyService {
   static {
     API_AUTH_TOKEN = ConfigManager.getProperty("api_auth_token");
   }
-
 
   private FirebaseDatabase db;
   private SurveyMonkeyService surveyService;
@@ -107,15 +105,12 @@ public class SurveyService extends SurveyMonkeyService {
           CreatePageRequest createPageRequest = new CreatePageRequest();
           createPageRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-          CreatePageResponse createPageResponse = new CreatePageResponse();
-          logger.debug("Create Page Response: " + createPageResponse.getResponseStatus());
-
           CreateQuestionRequest questionRequest = new CreateQuestionRequest(question);
           questionRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
           CreateQuestionResponse createQuestionResponse = addQuestion(questionRequest);
 
-          logger.debug("Create Question Response: " + createQuestionResponse.getResponseStatus());
+          logger.debug("Create Question Response: ", createQuestionResponse.getResponseStatus());
 
         } catch (Exception e) {
           logger.error("Error creating survey");
