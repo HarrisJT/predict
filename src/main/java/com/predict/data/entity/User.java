@@ -8,7 +8,6 @@ public class User {
   private Map<String, Double> weights;
 
   public User() {
-
   }
 
   public String getEmail() {

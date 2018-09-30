@@ -90,7 +90,7 @@ public final class EmailManager {
    * @param content is the content of the email
    * @returns whether or not it succeeded
    */
-  public boolean sendEmailToAllUsers(String content) {
+  public void sendEmailToAllUsers(String content) {
     try {
       List<User> users = userService.retrieveAllUsers();
       String[] emailAddresses = new String[users.size()];
@@ -99,8 +99,7 @@ public final class EmailManager {
       }
       sendEmail(emailAddresses, "New PredictApp Question!", content);
     } catch (Exception e) {
-      return false;
+      logger.error("Error sending email: " + content);
     }
-    return true;
   }
 }

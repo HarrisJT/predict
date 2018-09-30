@@ -2,7 +2,9 @@ package com.predict.data.service;
 
 import br.com.devfast.jsurveymonkey.app.SurveyConfig;
 import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
+import br.com.devfast.jsurveymonkey.request.CreateCollectorRequest;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
+import br.com.devfast.jsurveymonkey.response.CreateCollectorResponse;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
 import com.google.firebase.database.ChildEventListener;
@@ -71,7 +73,7 @@ public class SurveyService extends SurveyMonkeyService {
     try {
       CloseableHttpClient httpClient = HttpClients.createDefault();
       HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE
-              + "/" + request.getSurveyId() + "/pages"));
+          + "/" + request.getSurveyId() + "/pages"));
 
       setRequestAuthentication(httpPost, request.getAuthenticationToken());
       setRequestBody(httpPost, request.getJsonBody());
@@ -136,12 +138,19 @@ public class SurveyService extends SurveyMonkeyService {
 
           CreateQuestionResponse createQuestionResponse = addQuestion(questionRequest);
 
-          logger.debug("Create Question Response: ", createQuestionResponse.getResponseStatus());
+          logger.debug("Create Question Response: " + createQuestionResponse.getResponseStatus());
+
+          CreateCollectorRequest createCollectorRequest = new CreateCollectorRequest();
+          createCollectorRequest.setType("weblink");
+          createCollectorRequest.setAuthenticationToken(API_AUTH_TOKEN);
+
+          CreateCollectorResponse createCollectorResponse = createCollector(createCollectorRequest);
+          logger.debug("Create Collector Response: " + createCollectorResponse.getResponseStatus());
+
+          createCollectorResponse.getUrl();
 
           EmailManager emailManager = new EmailManager(userService);
           emailManager.sendEmailToAllUsers(createSurveyResponse.getSummary_url());
-
-
         } catch (Exception e) {
           logger.error("Error creating survey");
         }
