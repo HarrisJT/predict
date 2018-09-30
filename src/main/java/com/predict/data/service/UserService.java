@@ -3,7 +3,6 @@ package com.predict.data.service;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.User;
@@ -26,19 +25,17 @@ public class UserService {
     logger.debug("UserService initializing");
     try {
       this.db = databaseController.getDb();
-      retrieveAllUsers();
     } catch (Exception ex) {
       logger.error("Failed to initialize database: ", ex);
     }
   }
 
   public List<User> retrieveAllUsers() {
-    Query newQuery = db.getReference("users/").orderByKey();
     List<User> users = new ArrayList<>();
-    newQuery.addValueEventListener(new ValueEventListener() {
+    db.getReference("users/").addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        for (DataSnapshot data : dataSnapshot.getChildren()) {
+      public void onDataChange(DataSnapshot snapshot) {
+        for (DataSnapshot data : snapshot.getChildren()) {
           User user = data.getValue(User.class);
           users.add(user);
         }
@@ -46,7 +43,7 @@ public class UserService {
 
       @Override
       public void onCancelled(DatabaseError databaseError) {
-        logger.error("Failed to retrieveAllUsers: ", databaseError);
+        logger.error("Failed to get all users");
       }
     });
 

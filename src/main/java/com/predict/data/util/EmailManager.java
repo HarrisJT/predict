@@ -28,8 +28,6 @@ public final class EmailManager {
   private static final String EMAIL_PORT;
   private static final Properties EMAIL_PROPERTIES;
 
-  private UserService userService;
-
   static {
     // Initialize static variables
     EMAIL_ADDRESS = ConfigManager.getProperty("email_address");
@@ -45,6 +43,8 @@ public final class EmailManager {
     properties.put("mail.smtp.starttls.enable", "true");
     EMAIL_PROPERTIES = properties;
   }
+
+  private UserService userService;
 
   @Autowired
   public EmailManager(UserService userService) {
@@ -94,10 +94,13 @@ public final class EmailManager {
     try {
       List<User> users = userService.retrieveAllUsers();
       String[] emailAddresses = new String[users.size()];
+
       for (int i = 0; i < users.size(); i++) {
-        emailAddresses[i] = users.get(i).getEmail();
+        emailAddresses[i] = users.get(i).getEmail().replaceAll(",", ".");
+        logger.debug("Successfully sent email: " + emailAddresses[i]);
       }
       sendEmail(emailAddresses, "New PredictApp Question!", content);
+      logger.debug("Sucecssfully sent email: " + content);
     } catch (Exception e) {
       logger.error("Error sending email: " + content);
     }

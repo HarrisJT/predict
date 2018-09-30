@@ -23,7 +23,6 @@ import com.predict.data.entity.response.CreatePageResponse;
 import com.predict.data.entity.response.CreateQuestionResponse;
 import com.predict.data.util.ConfigManager;
 import com.predict.data.util.EmailManager;
-
 import java.net.URI;
 import java.util.Date;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -128,10 +127,14 @@ public class SurveyService extends SurveyMonkeyService {
         ConfigManager.setProperty(question.getCategory());
 
         long currentTime = new Date().getTime();
-        long sendTime = new Date(question.getToSend()).getTime();
-        if (currentTime < sendTime) {
-          return;
-        }
+//        try {
+//          Date d = new SimpleDateFormat("YYYY-MM-DDTHH:MM:SS").parse(question.getToSend());
+//          if (currentTime < d.getTime()) {
+//            return;
+//          }
+//        } catch (ParseException e) {
+//          e.printStackTrace();
+//        }
 
         try {
           CreateSurveyResponse createSurveyResponse = createSurvey();
@@ -153,9 +156,11 @@ public class SurveyService extends SurveyMonkeyService {
 
           CreateCollectorRequest createCollectorRequest = new CreateCollectorRequest();
           createCollectorRequest.setType("weblink");
+          createCollectorRequest.setPathSurveyId(createSurveyResponse.getId());
+          //createCollectorRequest.setClose_date(new SimpleDateFormat("YYYY-MM-DDTHH:MM:SS").parse(question.getToEnd()));
           createCollectorRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-          CreateCollectorResponse createCollectorResponse =  createCollector(createCollectorRequest);
+          CreateCollectorResponse createCollectorResponse = createCollector(createCollectorRequest);
           logger.debug("Create Collector Response: " + createCollectorResponse.getResponseStatus());
 
           EmailManager emailManager = new EmailManager(userService);
