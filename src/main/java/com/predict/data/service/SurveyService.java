@@ -55,6 +55,7 @@ public class SurveyService extends SurveyMonkeyService {
     CreateSurveyRequest createSurveyRequest = new CreateSurveyRequest();
     createSurveyRequest.setTitle("Predict");
     createSurveyRequest.setNickname("New question from Predict!");
+    createSurveyRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
     CreateSurveyResponse createSurveyResponse = surveyService.createSurvey(createSurveyRequest);
 
