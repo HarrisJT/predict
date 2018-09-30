@@ -96,6 +96,7 @@ public class SurveyService extends SurveyMonkeyService {
           question.setSurveyId(surveyId);
 
           CreateQuestionRequest questionRequest = new CreateQuestionRequest(question);
+          questionRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
           addQuestion(questionRequest);
         } catch (Exception e) {
