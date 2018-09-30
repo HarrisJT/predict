@@ -1,11 +1,14 @@
 package com.predict.data.entity;
 
+import java.util.Map;
+
 public class User {
 
   private String email;
+  private Map<String, Double> weights;
 
-  public User(String email) {
-    this.email = email;
+  public User() {
+
   }
 
   public String getEmail() {
@@ -14,5 +17,13 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Map<String, Double> getWeights() {
+    return weights;
+  }
+
+  public void setWeights(Map<String, Double> weights) {
+    this.weights = weights;
   }
 }
