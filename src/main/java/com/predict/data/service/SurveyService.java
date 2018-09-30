@@ -1,6 +1,7 @@
 package com.predict.data.service;
 
 import br.com.devfast.jsurveymonkey.app.SurveyConfig;
+import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
@@ -10,7 +11,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.Question;
+import com.predict.data.entity.builder.CreateQuestionResponseBuilder;
 import com.predict.data.entity.request.CreateQuestionRequest;
+import com.predict.data.entity.response.CreateQuestionResponse;
 import com.predict.data.util.ConfigManager;
 import java.net.URI;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -62,7 +65,7 @@ public class SurveyService extends SurveyMonkeyService {
     return createSurveyResponse.getId();
   }
 
-  private void addQuestion(CreateQuestionRequest request) {
+  private CreateQuestionResponse addQuestion(CreateQuestionRequest request) {
     try {
 
       CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -76,9 +79,11 @@ public class SurveyService extends SurveyMonkeyService {
       String result = EntityUtils.toString(response.getEntity());
 
       setResponse(result);
+      return new CreateQuestionResponseBuilder(result).getResponse();
 
     } catch (Exception e) {
-      logger.error("Error on addQuestion: ", e);
+      return new CreateQuestionResponse(StatusSurveyResponse.ERROR, e.getMessage());
+
     }
   }
 
@@ -98,7 +103,10 @@ public class SurveyService extends SurveyMonkeyService {
           CreateQuestionRequest questionRequest = new CreateQuestionRequest(question);
           questionRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-          addQuestion(questionRequest);
+          CreateQuestionResponse createQuestionResponse = addQuestion(questionRequest);
+
+          logger.debug("Create Question Response: " + createQuestionResponse.getResponseStatus());
+
         } catch (Exception e) {
           logger.error("Error creating survey");
         }
