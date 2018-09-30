@@ -92,8 +92,7 @@ public class SurveyService extends SurveyMonkeyService {
     try {
 
       CloseableHttpClient httpClient = HttpClients.createDefault();
-      HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE
-          + "/" + request.getSurveyId() + "/pages/1/questions"));
+      HttpPost httpPost = new HttpPost(new URI(request.getHref() + "/questions"));
       logger.debug(httpPost.toString());
 
       setRequestAuthentication(httpPost, request.getAuthenticationToken());
@@ -132,6 +131,7 @@ public class SurveyService extends SurveyMonkeyService {
           logger.debug("Create Page Response: " + createPageResponse.getResponseStatus());
 
           CreateQuestionRequest questionRequest = new CreateQuestionRequest(question);
+          questionRequest.setHref(createPageResponse.getHref());
           questionRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
           CreateQuestionResponse createQuestionResponse = addQuestion(questionRequest);

@@ -8,6 +8,7 @@ import org.json.JSONStringer;
 public class CreateQuestionRequest extends Request {
     private Question question;
     private String surveyId;
+    private String href;
 
     public CreateQuestionRequest(Question question) {
         setDate(new Date());
@@ -29,6 +30,14 @@ public class CreateQuestionRequest extends Request {
 
     public void setSurveyId(String surveyId) {
         this.surveyId = surveyId;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 
     @Override
