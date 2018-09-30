@@ -1,5 +1,6 @@
 package com.predict.data.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class User {
@@ -10,6 +11,7 @@ public class User {
 
   public User(String email) {
     this.email = email;
+    this.weights = new HashMap<>();
     this.weights.put("Inter_Politics", 0.1);
     this.weights.put("Nation_Politics", 0.1);
     this.weights.put("Economics", 0.1);

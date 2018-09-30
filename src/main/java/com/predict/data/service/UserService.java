@@ -1,9 +1,6 @@
 package com.predict.data.service;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.User;
 import java.util.ArrayList;
@@ -32,11 +29,11 @@ public class UserService {
 
   public List<User> retrieveAllUsers() {
     List<User> users = new ArrayList<>();
-    users.add(new User("braemelliot@gmail.com") );
-    users.add(new User("ebraem@wisc.edu") );
-    users.add(new User("hjthompson2@wisc.edu") );
-    users.add(new User("harris@harrisjt.com") );
-    users.add(new User("rhemmila@gwisc.edu") );
+    users.add(new User("braemelliot@gmail.com"));
+    users.add(new User("ebraem@wisc.edu"));
+    users.add(new User("hjthompson2@wisc.edu"));
+    users.add(new User("harris@harrisjt.com"));
+    users.add(new User("rhemmila@gwisc.edu"));
 //    newQuery.addValueEventListener(new ValueEventListener() {
 //      @Override
 //      public void onDataChange(DataSnapshot dataSnapshot) {
