@@ -27,6 +27,7 @@ public class CreatePageRequest extends Request {
         JSONStringer json = new JSONStringer();
         json.object()
                 .key("title").value("Page 1")
+                .key("id").value("1")
                 .endObject();
 
         System.out.println(json.toString());
