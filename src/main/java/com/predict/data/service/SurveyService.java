@@ -4,8 +4,10 @@ import br.com.devfast.jsurveymonkey.app.SurveyConfig;
 import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
 import br.com.devfast.jsurveymonkey.request.CreateCollectorRequest;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
+import br.com.devfast.jsurveymonkey.request.GetSurveyRequest;
 import br.com.devfast.jsurveymonkey.response.CreateCollectorResponse;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
+import br.com.devfast.jsurveymonkey.response.GetSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +23,7 @@ import com.predict.data.entity.response.CreatePageResponse;
 import com.predict.data.entity.response.CreateQuestionResponse;
 import com.predict.data.util.ConfigManager;
 import com.predict.data.util.EmailManager;
+
 import java.net.URI;
 import java.util.Date;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -122,6 +125,7 @@ public class SurveyService extends SurveyMonkeyService {
       public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
         logger.debug("onChildAdded()");
         Question question = dataSnapshot.getValue(Question.class);
+        ConfigManager.setProperty(question.getCategory());
 
         long currentTime = new Date().getTime();
         long sendTime = new Date(question.getToSend()).getTime();
@@ -151,13 +155,12 @@ public class SurveyService extends SurveyMonkeyService {
           createCollectorRequest.setType("weblink");
           createCollectorRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-          CreateCollectorResponse createCollectorResponse = createCollector(createCollectorRequest);
+          CreateCollectorResponse createCollectorResponse =  createCollector(createCollectorRequest);
           logger.debug("Create Collector Response: " + createCollectorResponse.getResponseStatus());
 
-          createCollectorResponse.getUrl();
-
           EmailManager emailManager = new EmailManager(userService);
-          emailManager.sendEmailToAllUsers(createSurveyResponse.getSummary_url());
+          emailManager.sendEmailToAllUsers(createCollectorResponse.getUrl());
+
         } catch (Exception e) {
           logger.error("Error creating survey");
         }
@@ -185,9 +188,12 @@ public class SurveyService extends SurveyMonkeyService {
 
   }
 
-//
-//    public void fetchSurvey() {
-//        GetSurveyRequest getSurveyRequest = new GetSurveyRequest("ID_SURVEY");
-//        GetSurveyResponse getSurveyResponse = surveyMonkeyService.getSurvey(getSurveyRequest);
-//    }
+    public void fetchSurvey(String surveyId) {
+        GetSurveyRequest getSurveyRequest = new GetSurveyRequest(surveyId);
+        getSurveyRequest.setAuthenticationToken(API_AUTH_TOKEN);
+        GetSurveyResponse getSurveyResponse = getSurvey(getSurveyRequest);
+
+        logger.debug("Get Survey Response: " + getSurveyResponse.getResponseStatus());
+
+    }
 }

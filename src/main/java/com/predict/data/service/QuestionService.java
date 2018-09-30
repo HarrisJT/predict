@@ -9,6 +9,7 @@ import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.Question;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +33,12 @@ public class QuestionService {
     }
   }
 
-  public List<Question> queryForEndedQuestions() {
+  public LinkedList<Question> queryForEndedQuestions() {
     logger.debug("queryForEndedQuestions()");
 
     long currentTime = new Date().getTime();
     Query newQuery = db.getReference("questions/").orderByKey();
-    List<Question> users = new ArrayList<>();
+    LinkedList<Question> users = new LinkedList<>();
 
     newQuery.addValueEventListener(new ValueEventListener() {
       @Override
@@ -63,6 +64,5 @@ public class QuestionService {
     return users;
 
   }
-
 
 }

@@ -4,6 +4,7 @@ import com.predict.data.entity.Question;
 import com.predict.data.service.QuestionService;
 import com.predict.data.service.SurveyService;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +32,12 @@ public class QuestionManager {
   @Scheduled(cron = "0 0 */1 * * ?")
   public void checkEndedQuestions() {
     logger.debug("Checking for surveys ending");
-    List<Question> endedQuestions = new ArrayList<>();
-    endedQuestions = questionService.queryForEndedQuestions();
+    LinkedList<Question> endedQuestions = questionService.queryForEndedQuestions();
 
     if (!endedQuestions.isEmpty()) {
       // There are ended questions, request the response from SurveyService
+      Question endedQuestion = endedQuestions.getFirst();
+      surveyService.fetchSurvey(endedQuestion.getSurveyId());
     }
   }
 

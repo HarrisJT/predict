@@ -25,4 +25,5 @@ public class ConfigManager {
     public static String getProperty(String key) {
         return APPLICATION_PROPERTIES.getProperty(key);
     }
+    public static void setProperty(String property) { APPLICATION_PROPERTIES.setProperty("category", property); }
 }
