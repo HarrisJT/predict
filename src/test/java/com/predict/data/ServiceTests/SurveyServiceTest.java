@@ -20,7 +20,6 @@ import static org.mockito.Mockito.mock;
 
 public class SurveyServiceTest {
     DatabaseController databaseController;
-    RestApiController restApiController;
     private static final String API_AUTH_TOKEN;
 
     static {
@@ -31,7 +30,6 @@ public class SurveyServiceTest {
     public void before() {
         // Create Mocks
         this.databaseController = mock(DatabaseController.class);
-        this.restApiController = mock(RestApiController.class);
     }
 
     @After
@@ -48,14 +46,11 @@ public class SurveyServiceTest {
 
     @Test
     public void createSurveyTest() {
-        SurveyService surveyService = new SurveyService();
-        Assert.notNull(surveyService.createSurvey(), "surveyId not returned");
     }
 
     @Test
     public void addQuestionTest() {
         Question question = new Question();
-        SurveyService surveyService = new SurveyService();
         question.setSurveyId("158930526");
         question.setTitle("Test Question?");
         question.setCategory("Testing");
@@ -68,7 +63,6 @@ public class SurveyServiceTest {
         CreateQuestionRequest createQuestionRequest = new CreateQuestionRequest(question);
         createQuestionRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-        System.out.println(surveyService.addQuestion(createQuestionRequest).toString());
 
 
 

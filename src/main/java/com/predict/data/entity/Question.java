@@ -1,8 +1,5 @@
 package com.predict.data.entity;
 
-import java.util.List;
-import java.util.Map;
-
 public class Question {
 
   private String surveyId;
@@ -11,7 +8,7 @@ public class Question {
   private String category;
   private String toSend;
   private String toEnd;
-  private List<Map<String, String>> choices;
+  private String[] choices;
 
   public Question() {
 
@@ -33,11 +30,11 @@ public class Question {
     this.surveyId = surveyId;
   }
 
-  public List<Map<String, String>> getChoices() {
+  public String[] getChoices() {
     return choices;
   }
 
-  public void setChoices(List<Map<String, String>> choices) {
+  public void setChoices(String[] choices) {
     this.choices = choices;
   }
 

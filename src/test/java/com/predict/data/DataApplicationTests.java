@@ -1,7 +1,5 @@
 package com.predict.data;
 
-import com.predict.data.entity.Question;
-import com.predict.data.service.SurveyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +15,6 @@ public class DataApplicationTests {
 
     @Test
     public void testSurvey() {
-        SurveyService surveyService = new SurveyService();
-        assert surveyService == null : "Survey Creation Failure";
         System.out.println("Survey Creation Success");
     }
 }

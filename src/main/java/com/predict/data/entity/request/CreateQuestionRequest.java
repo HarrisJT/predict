@@ -13,7 +13,6 @@ public class CreateQuestionRequest extends Request {
         setDate(new Date());
         this.question = question;
         this.surveyId = question.getSurveyId();
-
     }
 
     public Question getQuestion() {
