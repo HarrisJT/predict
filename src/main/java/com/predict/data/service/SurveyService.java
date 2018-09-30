@@ -147,10 +147,9 @@ public class SurveyService extends SurveyMonkeyService {
           CreateCollectorResponse createCollectorResponse = createCollector(createCollectorRequest);
           logger.debug("Create Collector Response: " + createCollectorResponse.getResponseStatus());
 
-          createCollectorResponse.getUrl();
-
           EmailManager emailManager = new EmailManager(userService);
-          emailManager.sendEmailToAllUsers(createSurveyResponse.getSummary_url());
+          emailManager.sendEmailToAllUsers(createCollectorResponse.getUrl());
+          
         } catch (Exception e) {
           logger.error("Error creating survey");
         }
