@@ -1,58 +1,58 @@
 package com.predict.data.entity;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 public class Question {
-  private String id;
+
   private String surveyId;
+  private String questionId;
   private String title;
   private String category;
-  private int toSend;
-  private int toEnd;
-  private ArrayList<Map<String,String>> choices;
+  private String toSend;
+  private String toEnd;
+  private List<String> choices;
 
   public Question() {
 
   }
 
-  public String getId() {
-    return id;
+  public String getQuestionId() {
+    return questionId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setQuestionId(String questionId) {
+    this.questionId = questionId;
   }
 
   public String getSurveyId() {
     return surveyId;
   }
-  
+
   public void setSurveyId(String surveyId) {
     this.surveyId = surveyId;
   }
 
-  public ArrayList<Map<String, String>> getChoices() {
+  public List<String> getChoices() {
     return choices;
   }
 
-  public void setChoices(ArrayList<Map<String, String>> choices) {
+  public void setChoices(List<String> choices) {
     this.choices = choices;
   }
 
-  public int getToSend() {
+  public String getToSend() {
     return toSend;
   }
 
-  public void setToSend(int toSend) {
+  public void setToSend(String toSend) {
     this.toSend = toSend;
   }
 
-  public int getToEnd() {
+  public String getToEnd() {
     return toEnd;
   }
 
-  public void setToEnd(int toEnd) {
+  public void setToEnd(String toEnd) {
     this.toEnd = toEnd;
   }
 

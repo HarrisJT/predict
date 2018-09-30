@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("questionManager")
 public class QuestionManager {
 
-  private static final Logger logger = LoggerFactory.getLogger(SurveyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(QuestionManager.class);
 
   private QuestionService questionService;
 
@@ -22,19 +22,17 @@ public class QuestionManager {
 
   @Autowired
   public QuestionManager(QuestionService questionService, SurveyService surveyService) {
+    logger.debug("QuestionManager initializing");
     this.questionService = questionService;
     this.surveyService = surveyService;
+    checkEndedQuestions();
   }
 
   @Scheduled(cron = "0 0 */1 * * ?")
   public void checkEndedQuestions() {
     logger.debug("Checking for surveys ending");
     List<Question> endedQuestions = new ArrayList<>();
-    try {
-      endedQuestions = questionService.queryForEndedQuestions();
-    } catch (Exception ex) {
-      logger.error("Error retrieving ended questions");
-    }
+    endedQuestions = questionService.queryForEndedQuestions();
 
     if (!endedQuestions.isEmpty()) {
       // There are ended questions, request the response from SurveyService
