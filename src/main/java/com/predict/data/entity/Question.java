@@ -1,5 +1,7 @@
 package com.predict.data.entity;
 
+import java.util.List;
+
 public class Question {
 
   private String surveyId;
@@ -8,7 +10,7 @@ public class Question {
   private String category;
   private String toSend;
   private String toEnd;
-  private String[] choices;
+  private List<String> choices;
 
   public Question() {
 
@@ -30,11 +32,11 @@ public class Question {
     this.surveyId = surveyId;
   }
 
-  public String[] getChoices() {
+  public List<String> getChoices() {
     return choices;
   }
 
-  public void setChoices(String[] choices) {
+  public void setChoices(List<String> choices) {
     this.choices = choices;
   }
 
