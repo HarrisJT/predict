@@ -48,7 +48,7 @@ public class CreateQuestionRequest extends Request {
                         .endObject().object()
                             .key("text").value(this.question.getChoices().get(1))
                             .key("visible").value(true)
-                            .key("position").value(1)
+                            .key("position").value(2)
                         .endObject()
                     .endArray()
                 .endObject()

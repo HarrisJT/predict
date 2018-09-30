@@ -208,3 +208,4 @@ Temporary Items
 application.properties
 node_modules
 src/main/resources/fb_creds.json
+logs/

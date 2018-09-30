@@ -22,19 +22,17 @@ public class QuestionManager {
 
   @Autowired
   public QuestionManager(QuestionService questionService, SurveyService surveyService) {
+    logger.debug("QuestionManager initializing");
     this.questionService = questionService;
     this.surveyService = surveyService;
+    checkEndedQuestions();
   }
 
   @Scheduled(cron = "0 0 */1 * * ?")
   public void checkEndedQuestions() {
     logger.debug("Checking for surveys ending");
     List<Question> endedQuestions = new ArrayList<>();
-    try {
-      endedQuestions = questionService.queryForEndedQuestions();
-    } catch (Exception ex) {
-      logger.error("Error retrieving ended questions");
-    }
+    endedQuestions = questionService.queryForEndedQuestions();
 
     if (!endedQuestions.isEmpty()) {
       // There are ended questions, request the response from SurveyService

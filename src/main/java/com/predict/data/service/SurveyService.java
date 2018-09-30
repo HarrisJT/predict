@@ -53,7 +53,7 @@ public class SurveyService extends SurveyMonkeyService {
   private String createSurvey() {
     logger.debug("createSurvey SurveyService");
     CreateSurveyRequest createSurveyRequest = new CreateSurveyRequest();
-    createSurveyRequest.setTitle("Predict");
+    createSurveyRequest.setTitle("Predict Question");
     createSurveyRequest.setNickname("New question from Predict!");
     createSurveyRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
@@ -68,11 +68,13 @@ public class SurveyService extends SurveyMonkeyService {
       CloseableHttpClient httpClient = HttpClients.createDefault();
       HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE
           + "/" + request.getSurveyId() + "/pages/1/questions"));
+      logger.debug(httpPost.toString());
 
       setRequestAuthentication(httpPost, request.getAuthenticationToken());
       setRequestBody(httpPost, request.getJsonBody());
 
       CloseableHttpResponse response = httpClient.execute(httpPost);
+      //.debug(response.toString());
       String result = EntityUtils.toString(response.getEntity());
 
       setResponse(result);
