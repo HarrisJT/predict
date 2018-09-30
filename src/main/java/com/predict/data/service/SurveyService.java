@@ -2,7 +2,9 @@ package com.predict.data.service;
 
 import br.com.devfast.jsurveymonkey.app.SurveyConfig;
 import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
+import br.com.devfast.jsurveymonkey.request.CreateCollectorRequest;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
+import br.com.devfast.jsurveymonkey.response.CreateCollectorResponse;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
 import com.google.firebase.database.ChildEventListener;
@@ -136,7 +138,17 @@ public class SurveyService extends SurveyMonkeyService {
 
           CreateQuestionResponse createQuestionResponse = addQuestion(questionRequest);
 
-          logger.debug("Create Question Response: ", createQuestionResponse.getResponseStatus());
+          logger.debug("Create Question Response: " + createQuestionResponse.getResponseStatus());
+
+          CreateCollectorRequest createCollectorRequest = new CreateCollectorRequest();
+          createCollectorRequest.setType("weblink");
+          createCollectorRequest.setAuthenticationToken(API_AUTH_TOKEN);
+
+          CreateCollectorResponse createCollectorResponse =  surveyService.createCollector(createCollectorRequest);
+          logger.debug("Create Collector Response: " + createCollectorResponse.getResponseStatus());
+
+          createCollectorResponse.getUrl();
+
 
         } catch (Exception e) {
           logger.error("Error creating survey");
