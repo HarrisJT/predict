@@ -7,10 +7,13 @@ import org.json.JSONStringer;
 
 public class CreateQuestionRequest extends Request {
     private Question question;
+    private String surveyId;
 
     public CreateQuestionRequest(Question question) {
         setDate(new Date());
         this.question = question;
+        this.surveyId = question.getSurveyId();
+
     }
 
     public Question getQuestion() {
@@ -19,6 +22,14 @@ public class CreateQuestionRequest extends Request {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public String getSurveyId() {
+        return surveyId;
+    }
+
+    public void setSurveyId(String surveyId) {
+        this.surveyId = surveyId;
     }
 
     @Override
