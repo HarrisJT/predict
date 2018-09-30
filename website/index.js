@@ -31,15 +31,15 @@ app.post('/', function(req, res) {
           userRef.child(transformed).set({
             email: transformed.replace(',', '.'),
             weights: {
-              international_politics: 0.1,
-              national_politics: 0.1,
-              environment: 0.1,
-              entertainment: 0.1,
-              sports: 0.1,
-              biology: 0.1,
-              technology: 0.1,
-              natural_disasters: 0.1,
-              economics: 0.1
+              Inter_Politics: 0.1,
+              Nation_Politics: 0.1,
+              Economics: 0.1,
+              Entertainment: 0.1,
+              Sports: 0.1,
+              Biology: 0.1,
+              Technology: 0.1,
+              Natural_Disasters: 0.1,
+              Environment: 0.1
             }
           })
         }
