@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.Question;
+import com.predict.data.entity.builder.CreatePageResponseBuilder;
 import com.predict.data.entity.builder.CreateQuestionResponseBuilder;
 import com.predict.data.entity.request.CreatePageRequest;
 import com.predict.data.entity.request.CreateQuestionRequest;
@@ -67,6 +68,27 @@ public class SurveyService extends SurveyMonkeyService {
     return createSurveyResponse.getId();
   }
 
+  private CreatePageResponse addPage(CreatePageRequest request) {
+    try {
+      CloseableHttpClient httpClient = HttpClients.createDefault();
+      HttpPost httpPost = new HttpPost(new URI(SurveyConfig.ENDPOINT_V3 + SURVEY_SERVICE
+              + "/" + request.getSurveyId() + "/pages"));
+
+      setRequestAuthentication(httpPost, request.getAuthenticationToken());
+      setRequestBody(httpPost, request.getJsonBody());
+
+      CloseableHttpResponse response = httpClient.execute(httpPost);
+      String result = EntityUtils.toString(response.getEntity());
+
+      setResponse(result);
+      return new CreatePageResponseBuilder(result).getResponse();
+
+    } catch (Exception e) {
+      return new CreatePageResponse(StatusSurveyResponse.ERROR, e.getMessage());
+
+    }
+  }
+
   private CreateQuestionResponse addQuestion(CreateQuestionRequest request) {
     try {
 
@@ -102,10 +124,11 @@ public class SurveyService extends SurveyMonkeyService {
           String surveyId = createSurvey();
           question.setSurveyId(surveyId);
 
-          CreatePageRequest createPageRequest = new CreatePageRequest();
-          createPageRequest.setAuthenticationToken(API_AUTH_TOKEN);
+          CreatePageRequest pageRequest = new CreatePageRequest(surveyId);
+          pageRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-          CreatePageResponse createPageResponse = new CreatePageResponse();
+          CreatePageResponse createPageResponse = addPage(pageRequest);
+
           logger.debug("Create Page Response: " + createPageResponse.getResponseStatus());
 
           CreateQuestionRequest questionRequest = new CreateQuestionRequest(question);
