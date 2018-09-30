@@ -49,6 +49,7 @@ public class UserService {
         logger.error("Failed to retrieveAllUsers: ", databaseError);
       }
     });
+
     return users;
   }
 }

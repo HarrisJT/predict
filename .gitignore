@@ -209,3 +209,4 @@ application.properties
 node_modules
 src/main/resources/fb_creds.json
 logs/
+/website/service-key.json
