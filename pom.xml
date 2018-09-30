@@ -1,111 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.predict</groupId>
-    <artifactId>data</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+  <groupId>com.predict</groupId>
+  <artifactId>data</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
 
-    <name>data</name>
-    <description>Collaborative forecasting</description>
+  <name>predict</name>
+  <description>Collaborative forecasting</description>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>10</java.version>
-    </properties>
-
-    <dependencies>
-
-        <!-- Mail -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <!-- Authorization Server -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-        </dependency>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.0.5.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
 
 
-      <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
-      <dependency>
-        <groupId>com.google.firebase</groupId>
-        <artifactId>firebase-admin</artifactId>
-        <version>6.5.0</version>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-firestore -->
-      <dependency>
-        <groupId>com.google.cloud</groupId>
-        <artifactId>google-cloud-firestore</artifactId>
-        <version>0.64.0-beta</version>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/com.google.api/api-common -->
-      <dependency>
-        <groupId>com.google.api</groupId>
-        <artifactId>api-common</artifactId>
-        <version>1.7.0</version>
-      </dependency>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>10</java.version>
+  </properties>
 
-        <!-- JSurveyMonkey -->
-      <dependency>
-        <groupId>com.github.felipenascimento0204</groupId>
-        <artifactId>jsurveymonkey</artifactId>
-        <version>89635925fb06f7cc75f079a06c38f36164f8248b</version>
-      </dependency>
+  <dependencies>
 
-        <!-- Spring Security JWT -->
-      <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-jwt</artifactId>
-      </dependency>
+    <!-- Mail -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>6.5.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-firestore -->
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-firestore</artifactId>
+      <version>0.64.0-beta</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.api/api-common -->
+    <dependency>
+      <groupId>com.google.api</groupId>
+      <artifactId>api-common</artifactId>
+      <version>1.7.0</version>
+    </dependency>
 
-      <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <!-- JSurveyMonkey -->
+    <dependency>
+      <groupId>com.github.felipenascimento0204</groupId>
+      <artifactId>jsurveymonkey</artifactId>
+      <version>89635925fb06f7cc75f079a06c38f36164f8248b</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20180813</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
   <repositories>
     <repository>
@@ -114,14 +99,17 @@
     </repository>
   </repositories>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <executable>true</executable>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 
 </project>
