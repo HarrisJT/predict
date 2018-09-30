@@ -19,14 +19,9 @@ import com.predict.data.entity.request.CreatePageRequest;
 import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.entity.response.CreatePageResponse;
 import com.predict.data.entity.response.CreateQuestionResponse;
-import com.predict.data.network.NNImplementation;
 import com.predict.data.util.ConfigManager;
-<<<<<<< HEAD
 import com.predict.data.util.EmailManager;
-=======
 
-import java.io.ObjectInputFilter;
->>>>>>> 67860ea36cd4687e24a937efb3879b38a573d1c4
 import java.net.URI;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
