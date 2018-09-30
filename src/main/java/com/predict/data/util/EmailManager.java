@@ -12,14 +12,23 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public final class EmailManager {
+
+  private static final Logger logger = LoggerFactory.getLogger(EmailManager.class);
 
   private static final String EMAIL_ADDRESS;
   private static final String EMAIL_PASSWORD;
   private static final String EMAIL_HOST;
   private static final String EMAIL_PORT;
   private static final Properties EMAIL_PROPERTIES;
+
+  private UserService userService;
 
   static {
     // Initialize static variables
@@ -40,7 +49,9 @@ public final class EmailManager {
   /**
    * Static utility class
    */
-  private EmailManager() {
+  @Autowired
+  private EmailManager(UserService userService) {
+    this.userService = userService;
   }
 
   /**
@@ -51,7 +62,7 @@ public final class EmailManager {
    * @param content is the content of the email
    * @returns whether the email was sent successfully
    */
-  public static boolean sendEmail(String[] recipients, String subject, String content) {
+  private void sendEmail(String[] recipients, String subject, String content) {
     Authenticator authenticator = new javax.mail.Authenticator() {
       protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
         return new javax.mail.PasswordAuthentication(EMAIL_ADDRESS, EMAIL_PASSWORD);
@@ -72,9 +83,8 @@ public final class EmailManager {
       message.setText(content);
       Transport.send(message);
     } catch (MessagingException e) {
-      return false;
+      logger.error("Email error: ", e);
     }
-    return true;
   }
 
   /**
@@ -84,9 +94,9 @@ public final class EmailManager {
    * @param content is the content of the email
    * @returns whether or not it succeeded
    */
-  public static boolean sendEmailToAllUsers(String subject, String content) {
+  public boolean sendEmailToAllUsers(String subject, String content) {
     try {
-      List<User> users = new UserService().retrieveAllUsers();
+      List<User> users = userService.retrieveAllUsers();
       String[] emailAddresses = new String[users.size()];
       for (int i = 0; i < users.size(); i++) {
         emailAddresses[i] = users.get(i).getEmail();

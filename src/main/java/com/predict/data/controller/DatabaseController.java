@@ -1,43 +1,49 @@
 package com.predict.data.controller;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DatabaseController {
 
-  private Firestore db;
-  private String PROJECT_ID = "predict-454c2";
+  private static final Logger logger = LoggerFactory.getLogger(DatabaseController.class);
+  //private String PROJECT_ID = "predict-454c2";
+
+  private FirebaseDatabase db;
+
 
   /**
    * Initialize Firestore using the project ID.
    */
-  public DatabaseController() throws Exception {
+  public DatabaseController() {
     try {
-      //ClassLoader classLoader = getClass().getClassLoader();
-      //File file = new File(classLoader.getResource("fb_creds.json").getFile());
-      //InputStream serviceAccount = new FileInputStream(file);
-      //GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
-
-      FirebaseOptions options = new FirebaseOptions.Builder()
-          .setCredentials(GoogleCredentials.fromStream(new ClassPathResource("/fb_creds.json").getInputStream()))
-          .build();
-
       if (FirebaseApp.getApps().isEmpty()) {
+        logger.debug("DatabaseController initializing");
+        FirebaseOptions options = new FirebaseOptions.Builder()
+            .setCredentials(GoogleCredentials
+                .fromStream(new ClassPathResource("/fb_creds.json").getInputStream()))
+            .setDatabaseUrl("https://predict-454c2.firebaseio.com")
+            .build();
+
         FirebaseApp.initializeApp(options);
+        logger.debug("Successfully connected to database.");
+
+        this.db = FirebaseDatabase.getInstance();
       }
     } catch (IOException ex) {
-      ex.printStackTrace();
+      logger.debug("Failed to connect to database: ", ex);
     }
-
-    this.db = FirestoreClient.getFirestore();
   }
 
-  public Firestore getDb() {
+
+  public FirebaseDatabase getDb() {
     return db;
   }
 }

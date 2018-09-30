@@ -1,7 +1,6 @@
 package com.predict.data.ServiceTests;
 
 import com.predict.data.controller.DatabaseController;
-import com.predict.data.controller.RestApiController;
 import com.predict.data.entity.Question;
 import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.service.SurveyService;
