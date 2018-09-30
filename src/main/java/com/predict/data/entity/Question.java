@@ -1,28 +1,28 @@
 package com.predict.data.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Question {
 
-  private String id;
   private String surveyId;
+  private String questionId
   private String title;
   private String category;
   private String toSend;
   private String toEnd;
-  private ArrayList<Map<String, String>> choices;
+  private List<Map<String, String>> choices;
 
   public Question() {
 
   }
 
-  public String getId() {
-    return id;
+  public String getQuestionId() {
+    return questionId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setQuestionId(String questionId) {
+    this.questionId = questionId;
   }
 
   public String getSurveyId() {
@@ -33,11 +33,11 @@ public class Question {
     this.surveyId = surveyId;
   }
 
-  public ArrayList<Map<String, String>> getChoices() {
+  public List<Map<String, String>> getChoices() {
     return choices;
   }
 
-  public void setChoices(ArrayList<Map<String, String>> choices) {
+  public void setChoices(List<Map<String, String>> choices) {
     this.choices = choices;
   }
 

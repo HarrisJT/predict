@@ -45,6 +45,7 @@ public class QuestionService {
       public void onDataChange(DataSnapshot dataSnapshot) {
         for (DataSnapshot data : dataSnapshot.getChildren()) {
           Question question = dataSnapshot.getValue(Question.class);
+          question.setQuestionId(dataSnapshot.getKey());
           if (data.child("END_AT").exists()) {
             long endTime = new Date(question.getToEnd()).getTime();
             if (currentTime > endTime) {
