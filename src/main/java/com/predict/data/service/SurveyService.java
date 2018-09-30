@@ -22,6 +22,7 @@ import com.predict.data.entity.response.CreateQuestionResponse;
 import com.predict.data.util.ConfigManager;
 import com.predict.data.util.EmailManager;
 import java.net.URI;
+import java.util.Date;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -121,6 +122,12 @@ public class SurveyService extends SurveyMonkeyService {
       public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
         logger.debug("onChildAdded()");
         Question question = dataSnapshot.getValue(Question.class);
+
+        long currentTime = new Date().getTime();
+        long sendTime = new Date(question.getToSend()).getTime();
+        if (currentTime < sendTime) {
+          return;
+        }
 
         try {
           CreateSurveyResponse createSurveyResponse = createSurvey();
