@@ -19,7 +19,10 @@ import com.predict.data.entity.request.CreatePageRequest;
 import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.entity.response.CreatePageResponse;
 import com.predict.data.entity.response.CreateQuestionResponse;
+import com.predict.data.network.NNImplementation;
 import com.predict.data.util.ConfigManager;
+
+import java.io.ObjectInputFilter;
 import java.net.URI;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -43,7 +46,6 @@ public class SurveyService extends SurveyMonkeyService {
   }
 
   private FirebaseDatabase db;
-  private SurveyMonkeyService surveyService;
 
   @Autowired
   public SurveyService(DatabaseController databaseController) {
@@ -64,7 +66,7 @@ public class SurveyService extends SurveyMonkeyService {
     createSurveyRequest.setNickname("New question from Predict!");
     createSurveyRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-    CreateSurveyResponse createSurveyResponse = surveyService.createSurvey(createSurveyRequest);
+    CreateSurveyResponse createSurveyResponse = createSurvey(createSurveyRequest);
 
     return createSurveyResponse.getId();
   }
@@ -121,6 +123,7 @@ public class SurveyService extends SurveyMonkeyService {
       public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
         logger.debug("onChildAdded()");
         Question question = dataSnapshot.getValue(Question.class);
+        ConfigManager.setProperty(question.getCategory());
 
         try {
           String surveyId = createSurvey();
@@ -144,7 +147,7 @@ public class SurveyService extends SurveyMonkeyService {
           createCollectorRequest.setType("weblink");
           createCollectorRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-          CreateCollectorResponse createCollectorResponse =  surveyService.createCollector(createCollectorRequest);
+          CreateCollectorResponse createCollectorResponse =  createCollector(createCollectorRequest);
           logger.debug("Create Collector Response: " + createCollectorResponse.getResponseStatus());
 
           createCollectorResponse.getUrl();
