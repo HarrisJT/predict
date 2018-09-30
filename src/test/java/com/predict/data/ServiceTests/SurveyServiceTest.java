@@ -48,23 +48,23 @@ public class SurveyServiceTest {
     public void createSurveyTest() {
     }
 
-    @Test
-    public void addQuestionTest() {
-        Question question = new Question();
-        question.setSurveyId("158930526");
-        question.setTitle("Test Question?");
-        question.setCategory("Testing");
-        ArrayList<Map<String,String>> choices = new ArrayList<>();
-        Map<String,String> map = new HashMap<>();
-        map.put("text", "Success");
-        map.put("text","Failure");
-        question.setChoices(choices);
-
-        CreateQuestionRequest createQuestionRequest = new CreateQuestionRequest(question);
-        createQuestionRequest.setAuthenticationToken(API_AUTH_TOKEN);
-
-
-
-
-    }
+//    @Test
+//    public void addQuestionTest() {
+//        Question question = new Question();
+//        question.setSurveyId("158930526");
+//        question.setTitle("Test Question?");
+//        question.setCategory("Testing");
+//        ArrayList<Map<String,String>> choices = new ArrayList<>();
+//        Map<String,String> map = new HashMap<>();
+//        map.put("text", "Success");
+//        map.put("text","Failure");
+//        question.setChoices(choices);
+//
+//        CreateQuestionRequest createQuestionRequest = new CreateQuestionRequest(question);
+//        createQuestionRequest.setAuthenticationToken(API_AUTH_TOKEN);
+//
+//
+//
+//
+//    }
 }
