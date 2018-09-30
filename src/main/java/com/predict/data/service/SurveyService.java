@@ -4,8 +4,10 @@ import br.com.devfast.jsurveymonkey.app.SurveyConfig;
 import br.com.devfast.jsurveymonkey.enums.StatusSurveyResponse;
 import br.com.devfast.jsurveymonkey.request.CreateCollectorRequest;
 import br.com.devfast.jsurveymonkey.request.CreateSurveyRequest;
+import br.com.devfast.jsurveymonkey.request.GetSurveyRequest;
 import br.com.devfast.jsurveymonkey.response.CreateCollectorResponse;
 import br.com.devfast.jsurveymonkey.response.CreateSurveyResponse;
+import br.com.devfast.jsurveymonkey.response.GetSurveyResponse;
 import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -179,9 +181,12 @@ public class SurveyService extends SurveyMonkeyService {
 
   }
 
-//
-//    public void fetchSurvey() {
-//        GetSurveyRequest getSurveyRequest = new GetSurveyRequest("ID_SURVEY");
-//        GetSurveyResponse getSurveyResponse = surveyMonkeyService.getSurvey(getSurveyRequest);
-//    }
+    public void fetchSurvey(String surveyId) {
+        GetSurveyRequest getSurveyRequest = new GetSurveyRequest(surveyId);
+        getSurveyRequest.setAuthenticationToken(API_AUTH_TOKEN);
+        GetSurveyResponse getSurveyResponse = getSurvey(getSurveyRequest);
+
+        logger.debug("Get Survey Response: " + getSurveyResponse.getResponseStatus());
+
+    }
 }
