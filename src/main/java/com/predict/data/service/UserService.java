@@ -26,6 +26,7 @@ public class UserService {
     logger.debug("UserService initializing");
     try {
       this.db = databaseController.getDb();
+      retrieveAllUsers();
     } catch (Exception ex) {
       logger.error("Failed to initialize database: ", ex);
     }

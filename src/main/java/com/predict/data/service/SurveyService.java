@@ -18,6 +18,7 @@ import com.predict.data.entity.request.CreateQuestionRequest;
 import com.predict.data.entity.response.CreatePageResponse;
 import com.predict.data.entity.response.CreateQuestionResponse;
 import com.predict.data.util.ConfigManager;
+import com.predict.data.util.EmailManager;
 import java.net.URI;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -41,12 +42,13 @@ public class SurveyService extends SurveyMonkeyService {
   }
 
   private FirebaseDatabase db;
-  private SurveyMonkeyService surveyService;
+  private UserService userService;
 
   @Autowired
-  public SurveyService(DatabaseController databaseController) {
+  public SurveyService(DatabaseController databaseController, UserService userService) {
     super(API_AUTH_TOKEN);
     logger.debug("SurveyService initializing");
+    this.userService = userService;
     try {
       this.db = databaseController.getDb();
       initializeListeners();
@@ -55,16 +57,14 @@ public class SurveyService extends SurveyMonkeyService {
     }
   }
 
-  private String createSurvey() {
+  private CreateSurveyResponse createSurvey() {
     logger.debug("createSurvey SurveyService");
     CreateSurveyRequest createSurveyRequest = new CreateSurveyRequest();
     createSurveyRequest.setTitle("Predict Question");
     createSurveyRequest.setNickname("New question from Predict!");
     createSurveyRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
-    CreateSurveyResponse createSurveyResponse = surveyService.createSurvey(createSurveyRequest);
-
-    return createSurveyResponse.getId();
+    return super.createSurvey(createSurveyRequest);
   }
 
   private CreatePageResponse addPage(CreatePageRequest request) {
@@ -121,10 +121,10 @@ public class SurveyService extends SurveyMonkeyService {
         Question question = dataSnapshot.getValue(Question.class);
 
         try {
-          String surveyId = createSurvey();
-          question.setSurveyId(surveyId);
+          CreateSurveyResponse createSurveyResponse = createSurvey();
+          question.setSurveyId(createSurveyResponse.getId());
 
-          CreatePageRequest pageRequest = new CreatePageRequest(surveyId);
+          CreatePageRequest pageRequest = new CreatePageRequest(createSurveyResponse.getId());
           pageRequest.setAuthenticationToken(API_AUTH_TOKEN);
 
           CreatePageResponse createPageResponse = addPage(pageRequest);
@@ -137,6 +137,10 @@ public class SurveyService extends SurveyMonkeyService {
           CreateQuestionResponse createQuestionResponse = addQuestion(questionRequest);
 
           logger.debug("Create Question Response: ", createQuestionResponse.getResponseStatus());
+
+          EmailManager emailManager = new EmailManager(userService);
+          emailManager.sendEmailToAllUsers(createSurveyResponse.getSummary_url());
+
 
         } catch (Exception e) {
           logger.error("Error creating survey");

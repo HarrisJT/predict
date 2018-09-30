@@ -20,7 +20,6 @@ public class QuestionService {
 
   private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
-
   private FirebaseDatabase db;
 
   @Autowired

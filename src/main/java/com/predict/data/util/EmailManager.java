@@ -46,11 +46,8 @@ public final class EmailManager {
     EMAIL_PROPERTIES = properties;
   }
 
-  /**
-   * Static utility class
-   */
   @Autowired
-  private EmailManager(UserService userService) {
+  public EmailManager(UserService userService) {
     this.userService = userService;
   }
 
@@ -90,18 +87,17 @@ public final class EmailManager {
   /**
    * Sends an email to all current users
    *
-   * @param subject is the subject of the email
    * @param content is the content of the email
    * @returns whether or not it succeeded
    */
-  public boolean sendEmailToAllUsers(String subject, String content) {
+  public boolean sendEmailToAllUsers(String content) {
     try {
       List<User> users = userService.retrieveAllUsers();
       String[] emailAddresses = new String[users.size()];
       for (int i = 0; i < users.size(); i++) {
         emailAddresses[i] = users.get(i).getEmail();
       }
-      sendEmail(emailAddresses, subject, content);
+      sendEmail(emailAddresses, "New PredictApp Question!", content);
     } catch (Exception e) {
       return false;
     }
