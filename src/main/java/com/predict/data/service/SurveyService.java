@@ -12,7 +12,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.Question;
 import com.predict.data.entity.builder.CreateQuestionResponseBuilder;
+import com.predict.data.entity.request.CreatePageRequest;
 import com.predict.data.entity.request.CreateQuestionRequest;
+import com.predict.data.entity.response.CreatePageResponse;
 import com.predict.data.entity.response.CreateQuestionResponse;
 import com.predict.data.util.ConfigManager;
 import java.net.URI;
@@ -99,6 +101,12 @@ public class SurveyService extends SurveyMonkeyService {
         try {
           String surveyId = createSurvey();
           question.setSurveyId(surveyId);
+
+          CreatePageRequest createPageRequest = new CreatePageRequest();
+          createPageRequest.setAuthenticationToken(API_AUTH_TOKEN);
+
+          CreatePageResponse createPageResponse = new CreatePageResponse();
+          logger.debug("Create Page Response: " + createPageResponse.getResponseStatus());
 
           CreateQuestionRequest questionRequest = new CreateQuestionRequest(question);
           questionRequest.setAuthenticationToken(API_AUTH_TOKEN);
