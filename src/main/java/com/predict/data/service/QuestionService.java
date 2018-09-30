@@ -38,7 +38,7 @@ public class QuestionService {
 
     long currentTime = new Date().getTime();
     Query newQuery = db.getReference("questions/").orderByKey();
-    LinkedList<Question> users = new LinkedList<>();
+    LinkedList<Question> questions = new LinkedList<>();
 
     newQuery.addValueEventListener(new ValueEventListener() {
       @Override
@@ -46,12 +46,13 @@ public class QuestionService {
         for (DataSnapshot data : dataSnapshot.getChildren()) {
           Question question = dataSnapshot.getValue(Question.class);
           question.setQuestionId(dataSnapshot.getKey());
-          if (data.child("END_AT").exists()) {
-            long endTime = new Date(question.getToEnd()).getTime();
-            if (currentTime > endTime) {
-              users.add(question);
-            }
-          }
+          questions.add(question);
+//          if (data.child("END_AT").exists()) {
+//            long endTime = new Date(question.getToEnd()).getTime();
+//            if (currentTime > endTime) {
+//              questions.add(question);
+//            }
+//          }
         }
       }
 
