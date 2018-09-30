@@ -55,7 +55,7 @@ public class UserService {
     QuerySnapshot querySnapshot = query.get();
     List<User> users = new ArrayList<User>();
     for(QueryDocumentSnapshot document : querySnapshot.getDocuments()) {
-      users.add(new User(document.getId()));
+      users.add(new User(document.getId().replace(",", ".")));
     }
     return users;
   }
