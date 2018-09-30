@@ -149,7 +149,7 @@ public class SurveyService extends SurveyMonkeyService {
 
           EmailManager emailManager = new EmailManager(userService);
           emailManager.sendEmailToAllUsers(createCollectorResponse.getUrl());
-          
+
         } catch (Exception e) {
           logger.error("Error creating survey");
         }
