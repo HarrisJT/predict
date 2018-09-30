@@ -45,8 +45,8 @@ public class SurveyService extends SurveyMonkeyService {
 
   @Autowired
   public SurveyService(DatabaseController databaseController) {
+    super(API_AUTH_TOKEN);
     logger.debug("SurveyService initializing");
-    this.surveyService = new SurveyMonkeyService(API_AUTH_TOKEN);
     try {
       this.db = databaseController.getDb();
       initializeListeners();
