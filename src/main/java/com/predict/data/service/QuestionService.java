@@ -1,9 +1,10 @@
 package com.predict.data.service;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.Question;
 import java.util.ArrayList;
@@ -19,46 +20,49 @@ public class QuestionService {
 
   private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
-  private Firestore db;
-
+  @Autowired
   private DatabaseController databaseController;
 
-  @Autowired
+  private DatabaseReference questionsRef;
+
   public QuestionService() {
+    logger.debug("QuestionService initialized");
     try {
       databaseController = new DatabaseController();
-      this.db = databaseController.getDb();
+      this.questionsRef = databaseController.getQuestionsRef();
     } catch (Exception ex) {
       logger.error("Failed to initialize database: ", ex);
     }
   }
 
-  // TODO: THIS IS BOILERPLATE
-  public List<Question> queryForEndedQuestions() throws Exception {
-    Date currentTime = new Date();
-    ApiFuture<QuerySnapshot> query = db.collection("questions")
-        .whereGreaterThan("TO_END", currentTime).get();
-    QuerySnapshot querySnapshot = query.get();
-    List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-    List<Question> allQuestions = new ArrayList<>();
-    for (QueryDocumentSnapshot document : documents) {
-      Question question = document.toObject(Question.class);
-      allQuestions.add(question);
-    }
-    return allQuestions;
-  }
+  public List<Question> queryForEndedQuestions() {
+    logger.debug("queryForEndedQuestions()");
+    long currentTime = new Date().getTime();
+    Query newQuery = questionsRef.orderByKey();
+    List<Question> users = new ArrayList<>();
 
-  public List<Question> retrieveAllQuestions() throws Exception {
-    // asynchronously retrieve all users
-    ApiFuture<QuerySnapshot> query = db.collection("questions").get();
-    QuerySnapshot querySnapshot = query.get();
-    List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-    List<Question> allQuestions = new ArrayList<>();
-    for (QueryDocumentSnapshot document : documents) {
-      Question question = document.toObject(Question.class);
-      allQuestions.add(question);
-    }
-    return allQuestions;
+    newQuery.addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        for (DataSnapshot data : dataSnapshot.getChildren()) {
+          Question question = dataSnapshot.getValue(Question.class);
+          if (data.child("END_AT").exists()) {
+            long endTime = new Date(question.getToEnd()).getTime();
+            if (currentTime > endTime) {
+              users.add(question);
+            }
+          }
+        }
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        logger.error("Failed to queryForEndedQuestions: ", databaseError);
+      }
+    });
+
+    return users;
+
   }
 
 

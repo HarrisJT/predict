@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Question {
+
   private String id;
   private String surveyId;
   private String title;
   private String category;
-  private int toSend;
-  private int toEnd;
-  private ArrayList<Map<String,String>> choices;
+  private String toSend;
+  private String toEnd;
+  private ArrayList<Map<String, String>> choices;
 
   public Question() {
 
@@ -27,7 +28,7 @@ public class Question {
   public String getSurveyId() {
     return surveyId;
   }
-  
+
   public void setSurveyId(String surveyId) {
     this.surveyId = surveyId;
   }
@@ -40,19 +41,19 @@ public class Question {
     this.choices = choices;
   }
 
-  public int getToSend() {
+  public String getToSend() {
     return toSend;
   }
 
-  public void setToSend(int toSend) {
+  public void setToSend(String toSend) {
     this.toSend = toSend;
   }
 
-  public int getToEnd() {
+  public String getToEnd() {
     return toEnd;
   }
 
-  public void setToEnd(int toEnd) {
+  public void setToEnd(String toEnd) {
     this.toEnd = toEnd;
   }
 
