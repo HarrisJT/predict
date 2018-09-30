@@ -7,7 +7,7 @@ import br.com.devfast.jsurveymonkey.services.SurveyMonkeyService;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.predict.data.controller.DatabaseController;
 import com.predict.data.entity.Question;
 import com.predict.data.entity.request.CreateQuestionRequest;
@@ -34,18 +34,16 @@ public class SurveyService extends SurveyMonkeyService {
     API_AUTH_TOKEN = ConfigManager.getProperty("api_auth_token");
   }
 
-  @Autowired
-  private DatabaseController databaseController;
 
-  private DatabaseReference questionsRef;
+  private FirebaseDatabase db;
   private SurveyMonkeyService surveyService;
 
-  public SurveyService() {
-    logger.debug("Initialized SurveyService");
+  @Autowired
+  public SurveyService(DatabaseController databaseController) {
+    logger.debug("SurveyService initializing");
     this.surveyService = new SurveyMonkeyService(API_AUTH_TOKEN);
     try {
-      databaseController = new DatabaseController();
-      this.questionsRef = databaseController.getQuestionsRef();
+      this.db = databaseController.getDb();
       initializeListeners();
     } catch (Exception ex) {
       logger.error("Failed to initialize database: ", ex);
@@ -86,7 +84,7 @@ public class SurveyService extends SurveyMonkeyService {
   private void initializeListeners() {
     logger.debug("initializeListeners()");
 
-    questionsRef.addChildEventListener(new ChildEventListener() {
+    db.getReference("questions/").addChildEventListener(new ChildEventListener() {
       @Override
       public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
         logger.debug("onChildAdded()");

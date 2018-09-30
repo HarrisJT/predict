@@ -2,7 +2,7 @@ package com.predict.data.service;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.predict.data.controller.DatabaseController;
@@ -20,16 +20,14 @@ public class QuestionService {
 
   private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
+
+  private FirebaseDatabase db;
+
   @Autowired
-  private DatabaseController databaseController;
-
-  private DatabaseReference questionsRef;
-
-  public QuestionService() {
-    logger.debug("QuestionService initialized");
+  public QuestionService(DatabaseController databaseController) {
+    logger.debug("QuestionService initializing");
     try {
-      databaseController = new DatabaseController();
-      this.questionsRef = databaseController.getQuestionsRef();
+      this.db = databaseController.getDb();
     } catch (Exception ex) {
       logger.error("Failed to initialize database: ", ex);
     }
@@ -37,8 +35,9 @@ public class QuestionService {
 
   public List<Question> queryForEndedQuestions() {
     logger.debug("queryForEndedQuestions()");
+
     long currentTime = new Date().getTime();
-    Query newQuery = questionsRef.orderByKey();
+    Query newQuery = db.getReference("questions/").orderByKey();
     List<Question> users = new ArrayList<>();
 
     newQuery.addValueEventListener(new ValueEventListener() {
