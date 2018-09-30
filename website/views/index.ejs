@@ -7,13 +7,25 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
   </head>
   <body>
+    <script>
+      window.onload = function() {
+        if(<%= completed %>) {
+          var parent = document.getElementById("email-form");
+          var child = document.getElementById("original-form");
+          var thanksText = document.createElement("p");
+          thanksText.setAttribute("style", "font-size: 30px; display: block;");
+          thanksText.innerHTML = "Thanks, we hope to hear from you soon!";
+          parent.replaceChild(thanksText, child);
+        }
+      }
+    </script>
     <div id="header">
       <p id="title">Predict</p>
     </div>
     <div id="form-wrapper">
       <div id="email-form">
-        <fieldset>
-          <form action="" class="pure-form" method="post">
+        <fieldset id="original-form">
+          <form action="/" class="pure-form" method="post">
             <input class="ghost-input" type="text" placeholder="Enter your email.." name="email" /><br>
             <button type="submit" class="ghost-button">Submit</button>
           </form>
